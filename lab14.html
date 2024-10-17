@@ -21,12 +21,17 @@
         <label>Set profile</label>
         <input id="input-url" type="text" placeholder="Enter">
         <button onclick="setImg()">set</button>
-            
-        <label>Name</label><input type="text" placeholder="Enter">
-        <label>Phone</label><input type="text" placeholder="Enter">
-        <button onclick="addRow()">add</button>
+    </div>
+        <div class="box">
+            <label>Name</label><input type="text" placeholder="Enter" id="telname">
+            <label>Phone</label><input type="text" placeholder="Enter" id="name">
+            <button onclick="addRow()">add</button>
+            <button onclick="saveCSV()">export</button>
+        </div>
+    <div class="box">
         <table id="table">
             <tr>
+                <th>No.</th>
                 <th>name</th> 
                 <th>phone</th>
             </tr>
@@ -39,6 +44,10 @@
         const profile = document.getElementById("profile");
         const inputUrl = document.getElementById("input-url");
         const table = document.getElementById("table");
+        var count = 0;
+        let phonenumber = [["No.", "Name", "Phone"]]
+        let tmp = []
+        console.log(saveButton.value)
 
         function setName(){
             name.textContent = inputname.value + ", hi";
@@ -48,15 +57,35 @@
             profile.style.backgroundImage = "url(" + inputUrl.value + ")";
         }
         function addRow(){
-            const row = document.createElement("tr");
-            const cell1 = document.createElement("td");
-            const cell2 = document.createElement("td");
-            cell1.textContent = "kmdaoger"
-            cell2.textContent = "17072548"
-            row.appendChild(cell1);
-            row.appendChild(cell2);
-            table.appendChild(row);
+            count += 1;
+            const row = document.createElement("tr")
+            const cell1 = document.createElement("td")
+            const cell2 = document.createElement("td")
+            cell1.textContent = document.getElementById("telname").value
+            cell2.textContent = document.getElementById("name").value
+            const cell0 = document.createElement("td")
+            cell0.textContent = count
+            row.appendChild(cell0)
+            row.appendChild(cell1)
+            row.appendChild(cell2)
+            document.getElementById("table").appendChild(row)
+            const addBtn = document.getElementById("telname").value;
+            const saveButton = document.getElementById("name").value;
+            tmp = [count, addBtn, saveButton]
+            phonenumber.push(tmp)
         }
+        function saveCSV() {
+        const csvContent = phonenumber.map(row => row.join(",")).join("\n"); // Convert array to CSV string
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "data.csv");
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        };
     </script>
 </body>
 </html>

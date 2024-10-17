@@ -29,4 +29,17 @@ h1{
     flex-direction: column;
     align-items: center;
     row-gap: 10px;
+    margin: 10px 0;
+}
+th{
+    background-color: paleturquoise;
+    color: black;
+}
+table{
+    text-align: center;
+    width: 50%;
+    border-collapse: collapse;
+    border-spacing: 50px;
+    margin: 10px;
+    border: 2px solid black;
 }
